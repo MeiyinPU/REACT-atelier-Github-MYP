@@ -1,4 +1,7 @@
 import { useState, useEffect } from "react";
+// ! changer en redux
+import { useSelector, useDispatch } from "react-redux";
+
 //Import de axios
 import axios from "axios";
 //Import de fausse donnée
@@ -9,8 +12,15 @@ import githubLogo from "./assets/img/logo-github.png";
 import Search from "./components/Search";
 import "./App.scss";
 
+  // ! Redux: dispatch
+import {setLoading} from "./actions/loading";
+
 function App() {
-  const [loading, setLoading] = useState(false);
+  // ! Redux: dispatch
+const despatch = useDispatch();
+
+
+ //! const [loading, setLoading] = useState(false);   obj: desactiver cette ligne pour changer en redux
   const [query, setQuery] = useState("");
   const [page, setPage] = useState(1);
   //Init repos avec un tableau vide pour eviter l'erreur de undefined sur le repos.items.map
@@ -38,7 +48,8 @@ const reset=()=>{
 }
 
   const fetchResults = async () => {
-    setLoading(true);
+    // ! setLoading(true);
+   dispatch(setLoading());
 
     try {
       //Avec une ternaire, on verifie que query est vide, si oui on va chercher les top repos
